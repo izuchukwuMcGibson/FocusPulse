@@ -1,0 +1,63 @@
+{
+  "name": "FocusPulse Agent",
+  "description": "A simple Telex.im agent that helps users stay productive by managing focus sessions, breaks, and daily productivity summaries.",
+  "version": "1.0.0",
+  "author": "McGibson Izuchukwu",
+  "actions": [
+    {
+      "name": "Start Focus Session",
+      "endpoint": "/start_focus",
+      "method": "POST",
+      "description": "Starts a focus session for the user.",
+      "parameters": {
+        "user_id": "string (required)",
+        "channel_id": "string (required)",
+        "duration": "integer (minutes, optional, default: 25)",
+        "break": "integer (minutes, optional, default: 5)"
+      }
+    },
+    {
+      "name": "Stop Focus Session",
+      "endpoint": "/stop_focus",
+      "method": "POST",
+      "description": "Stops a running focus session for the user.",
+      "parameters": {
+        "session_id": "string (optional)",
+        "user_id": "string (optional)"
+      }
+    },
+    {
+      "name": "Get Status",
+      "endpoint": "/status/<user_id>",
+      "method": "GET",
+      "description": "Fetch all focus sessions for a given user.",
+      "parameters": {
+        "user_id": "string (required)"
+      }
+    },
+    {
+      "name": "Enable Daily Summary",
+      "endpoint": "/enable_daily_summary",
+      "method": "POST",
+      "description": "Schedules a daily productivity summary for the user.",
+      "parameters": {
+        "user_id": "string (required)",
+        "channel_id": "string (required)",
+        "time": "string (optional, default: '21:00' UTC)"
+      }
+    }
+  ],
+  "scheduling": {
+    "type": "interval",
+    "interval_minutes": 30,
+    "description": "Agent checks every 30 minutes for completed focus sessions and sends daily summaries at scheduled times."
+  },
+  "webhook": {
+    "url": "${TELEX_WEBHOOK_URL}",
+    "method": "POST",
+    "payload_format": {
+      "channel_id": "string",
+      "text": "string"
+    }
+  }
+}
