@@ -53,7 +53,7 @@
     "description": "Agent checks every 30 minutes for completed focus sessions and sends daily summaries at scheduled times."
   },
   "webhook": {
-    "url": "${TELEX_WEBHOOK_URL}",
+    "url": "https://web-production-cd522.up.railway.app",
     "method": "POST",
     "payload_format": {
       "channel_id": "string",
